@@ -6,21 +6,21 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       margin: 20px;
+      background-color: #f4f4f4;
     }
 
     h1 {
-      color: #2e7d32;
+      color: #4CAF50;
     }
 
     .container {
       max-width: 800px;
       margin: auto;
-      background-color: #fff;
+      background: #fff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     textarea {
@@ -28,18 +28,18 @@
       height: 300px;
       margin-top: 10px;
       padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
       font-family: monospace;
       font-size: 14px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
       resize: none;
     }
 
     button {
       margin-top: 10px;
       padding: 10px 20px;
-      background-color: #2e7d32;
-      color: #fff;
+      background-color: #4CAF50;
+      color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -47,17 +47,32 @@
     }
 
     button:hover {
-      background-color: #1b5e20;
+      background-color: #45a049;
+    }
+
+    .section {
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Minecraft Command Book</h1>
-    <p>คัดลอกคำสั่งทั้งหมดไปใช้ในเกม Minecraft โดยกดปุ่มด้านล่าง</p>
 
-    <textarea id="commandBox" readonly></textarea><br>
-    <button onclick="copyCommands()">Copy All Commands</button>
+    <div class="section">
+      <h2>คำสั่ง Minecraft ทั้งหมด</h2>
+      <textarea id="commandBox" readonly></textarea><br>
+      <button onclick="copyCommands()">Copy คำสั่งทั้งหมด</button>
+    </div>
+
+    <div class="section">
+      <h2>วิธีใช้</h2>
+      <ol>
+        <li>คัดลอกคำสั่งทั้งหมดด้วยปุ่ม “Copy คำสั่งทั้งหมด”</li>
+        <li>เปิดเกม Minecraft → กด T เพื่อเปิดแชท</li>
+        <li>วางคำสั่งทั้งหมด แล้วกด Enter เพื่อใช้งาน</li>
+      </ol>
+    </div>
   </div>
 
   <script>
@@ -77,4 +92,16 @@
     ];
 
     // แสดงคำสั่งใน textarea
-    const commandBox = document.getElementBy
+    const commandBox = document.getElementById('commandBox');
+    commandBox.value = commands.join('\n');
+
+    // ฟังก์ชัน copy คำสั่งทั้งหมด
+    function copyCommands() {
+      commandBox.select();
+      commandBox.setSelectionRange(0, 99999); // สำหรับมือถือ
+      document.execCommand("copy");
+      alert("คัดลอกคำสั่งทั้งหมดไปแล้ว! นำไปวางใน Minecraft แชทได้เลย");
+    }
+  </script>
+</body>
+</html>
