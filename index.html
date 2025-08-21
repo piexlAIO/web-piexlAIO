@@ -1,106 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
   <meta charset="UTF-8">
   <title>Minecraft Command Book</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f4f4f4;
-    }
-
-    h1 {
-      color: #4CAF50;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
+      background: #1e1e1e;
+      color: #fff;
+      margin: 0;
       padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+    .command {
+      background: #2b2b2b;
+      padding: 15px;
+      margin: 10px 0;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px #000;
     }
-
-    textarea {
-      width: 100%;
-      height: 300px;
-      margin-top: 10px;
-      padding: 10px;
+    .command h2 {
+      margin: 0;
+      color: #ff9800;
+    }
+    .syntax {
       font-family: monospace;
-      font-size: 14px;
+      background: #000;
+      padding: 5px 10px;
       border-radius: 5px;
-      border: 1px solid #ccc;
-      resize: none;
+      display: inline-block;
     }
-
     button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #4CAF50;
+      background: #4caf50;
       color: white;
       border: none;
+      padding: 5px 10px;
+      margin-top: 10px;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
     }
-
     button:hover {
-      background-color: #45a049;
+      background: #45a049;
     }
-
-    .section {
-      margin-bottom: 20px;
+    .output {
+      margin-top: 10px;
+      font-family: monospace;
+      background: #111;
+      padding: 8px;
+      border-radius: 5px;
+      display: none;
+      white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Minecraft Command Book</h1>
+  <h1>📖 Minecraft Command Book</h1>
 
-    <div class="section">
-      <h2>คำสั่ง Minecraft ทั้งหมด</h2>
-      <textarea id="commandBox" readonly></textarea><br>
-      <button onclick="copyCommands()">Copy คำสั่งทั้งหมด</button>
-    </div>
+  <div class="command">
+    <h2>/advancement</h2>
+    <p class="syntax">/advancement (grant|revoke) &lt;ผู้เล่น&gt; everything</p>
+    <p><b>วิธีใช้:</b> ใช้เพื่อให้ (grant) หรือเอาออก (revoke) ความสำเร็จทั้งหมดของผู้เล่น</p>
+    <p><b>อธิบาย:</b> ใช้จัดการ Achievement ของผู้เล่นในเซิร์ฟเวอร์</p>
+    <button onclick="showCommand(this, '/advancement grant @p everything')">แสดง Command</button>
+    <div class="output"></div>
+  </div>
 
-    <div class="section">
-      <h2>วิธีใช้</h2>
-      <ol>
-        <li>คัดลอกคำสั่งทั้งหมดด้วยปุ่ม “Copy คำสั่งทั้งหมด”</li>
-        <li>เปิดเกม Minecraft → กด T เพื่อเปิดแชท</li>
-        <li>วางคำสั่งทั้งหมด แล้วกด Enter เพื่อใช้งาน</li>
-      </ol>
-    </div>
+  <div class="command">
+    <h2>/attribute</h2>
+    <p class="syntax">/attribute &lt;target&gt; &lt;attribute&gt; get</p>
+    <p><b>วิธีใช้:</b> ใช้แก้ไขหรือดูค่า attribute ของเอนทิตี้ เช่น ความเร็ว ความแข็งแรง</p>
+    <p><b>อธิบาย:</b> ตัวอย่างเช่น เพิ่มความเร็วให้ผู้เล่น</p>
+    <button onclick="showCommand(this, '/attribute @p minecraft:generic.movement_speed base set 0.3')">แสดง Command</button>
+    <div class="output"></div>
+  </div>
+
+  <div class="command">
+    <h2>/ban</h2>
+    <p class="syntax">/ban &lt;ผู้เล่น&gt; [เหตุผล]</p>
+    <p><b>วิธีใช้:</b> ใช้แบนผู้เล่นจากเซิร์ฟเวอร์</p>
+    <p><b>อธิบาย:</b> สามารถใส่เหตุผลได้ เช่น <code>/ban Steve ใช้โปรแกรมโกง</code></p>
+    <button onclick="showCommand(this, '/ban Steve')">แสดง Command</button>
+    <div class="output"></div>
   </div>
 
   <script>
-    // รายการคำสั่ง Minecraft
-    const commands = [
-      "/advancement", "/attribute", "/ban", "/ban-ip", "/banlist",
-      "/bossbar", "/clear", "/clone", "/damage", "/data",
-      "/datapack", "/debug", "/effect", "/enchant", "/execute",
-      "/fill", "/function", "/give", "/gamemode", "/gamerule",
-      "/help", "/kick", "/kill", "/list", "/locate",
-      "/loot", "/me", "/msg", "/op", "/pardon",
-      "/particle", "/playsound", "/recipe", "/reload", "/say",
-      "/scoreboard", "/seed", "/setblock", "/setworldspawn", "/spawnpoint",
-      "/spectate", "/spreadplayers", "/stopsound", "/summon", "/team",
-      "/teleport", "/tell", "/tellraw", "/time", "/title",
-      "/tp", "/trigger", "/weather", "/whitelist", "/worldborder"
-    ];
-
-    // แสดงคำสั่งใน textarea
-    const commandBox = document.getElementById('commandBox');
-    commandBox.value = commands.join('\n');
-
-    // ฟังก์ชัน copy คำสั่งทั้งหมด
-    function copyCommands() {
-      commandBox.select();
-      commandBox.setSelectionRange(0, 99999); // สำหรับมือถือ
-      document.execCommand("copy");
-      alert("คัดลอกคำสั่งทั้งหมดไปแล้ว! นำไปวางใน Minecraft แชทได้เลย");
+    function showCommand(btn, cmd) {
+      const out = btn.nextElementSibling;
+      out.style.display = "block";
+      out.textContent = cmd;
     }
   </script>
 </body>
